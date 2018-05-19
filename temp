@@ -1,0 +1,46 @@
+#!/bin/bash
+# Temp
+# for temp tests
+
+clear
+echo "Writing today's date, and subsequent two weekdays to file."
+echo
+echo "Name a date (month dd)"
+read specified_date
+
+date=$( date -d "$specified_date" "+%b %d" )
+
+tomorrow=$( date -d "$date +1 day" +%a )
+
+echo
+echo "Next day is $tomorrow"
+
+if
+   [ "$tomorrow" = "Sat" ] ; then
+      echo
+      echo "That's the weekend"
+      
+      tomorrow=$( date -d "$date +3 days" "+%b %d" )
+      second=$( date -d "$tomorrow +1 day" "+%b %d" )
+
+      echo "Today: $date | Next weekday: $tomorrow | Next next weekday: $second" > ~/.temp.txt
+
+elif
+   [ "$tomorrow" = "Fri" ] ; then
+
+      tomorrow=$( date -d "$date +1 days" "+%b %d" )
+      second=$( date -d "$tomorrow +3 day" "+%b %d" )
+
+      echo "Today: $date | Next weekday: $tomorrow | Next next weekday: $second" > ~/.temp.txt
+
+else
+
+      tomorrow=$( date -d "$date +1 days" "+%b %d" )
+      second=$( date -d "$tomorrow +1 day" "+%b %d" )
+
+      echo "Today: $date | Next weekday: $tomorrow | Next next weekday: $second" > ~/.temp.txt
+fi
+
+echo
+echo
+cat ~/.temp.txt

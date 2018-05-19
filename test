@@ -1,0 +1,42 @@
+#!/bin/bash
+# Current test
+# commander.aurelius
+
+
+# Set file path and initiate
+
+todo_data="$HOME/.todo_data.txt"
+
+   echo
+   echo "Name any date."
+   read date
+   echo
+   echo "Input?"
+   read input
+   echo
+
+# Set date to viariable, echo to test
+
+date_1a=$(date -d "$date" "+%a %B %d")
+date_1b=$(date -d "$date" +%s)
+
+   echo $date_1a
+   echo $date_1b
+   echo
+
+
+# Write date to file
+
+   echo "$date_1b, $input" > $HOME/.todo_data.txt
+   echo
+
+
+# Set "delta" to difference in dates
+
+delta= \
+   $(( 
+      (`date -d "$date" +%s`-`date -d now +%s`)/86400
+    ))
+
+
+   echo Difference: $delta    
