@@ -1,0 +1,72 @@
+#!/bin/bash
+# script to automate followups
+
+
+# put the following in bashrc or bash_profile
+# source ~/bin/follow v
+
+
+# init
+
+datafile=~/.follow.txt
+init=$1
+today=$( date +%m-%d )
+
+
+# does datafile exist?
+if
+   [ -e $datafile ]; then
+      clear
+else
+      clear
+      echo
+      echo "Datafile not found, creating..."
+      touch ~/.follow.txt
+      echo "File created."
+      echo "-------------"
+fi
+
+
+# write to file
+
+if
+   [ -z "$init" ] ; then
+      echo 
+      echo "    ========================"
+      echo "    === Follow Up Report ==="
+      echo "    ========================"
+      echo
+      echo
+      echo "Create new entry (n) or view (v)?"
+      read answer
+         init=$answer
+fi
+ 
+if
+   [ "$init" = n ] ; then
+      echo
+      echo "Enter the ticket #:"
+      read ticket
+      echo
+      echo "Enter followup date in mm-dd format:"
+      read date
+      echo
+      echo "What's the name:"
+      read name
+      echo
+
+   echo "$ticket $today $date $name" >> $datafile
+
+elif
+   [ "$init" = v ] ; then
+      echo
+      while read -r ticket_read today_read date_read name_read; do
+
+         if
+            [[ "$today" -eq "$date_read" ]] ; then
+               echo "$ticket_read | called: $today_read | email: $date_read | $name_read"
+         fi
+
+      done < $datafile
+fi
+
